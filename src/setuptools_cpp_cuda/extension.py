@@ -5,6 +5,7 @@ from typing import List
 import setuptools
 
 from .find_cuda import find_cuda_home_path
+from .utils import IS_WINDOWS
 
 CUDA_HOME = find_cuda_home_path()
 cudnn_path = os.environ.get('CUDNN_HOME') or os.environ.get('CUDNN_PATH')
