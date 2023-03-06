@@ -1,0 +1,38 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "setuptools-cpp-cuda"
+readme = "README.md"
+requires-python = ">=3.6"
+license = { file = "LICENSE" }
+keywords = ["compilation", "compile", "cross", "cross-compilation", "cross-compile", "cuda", "setuptools", "wrapper"]
+authors = [{ name = "Rafael J. Vicente", email = "rafaelj.vicente@gmail.com" }]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+    "setuptools", "nvidia-ml-py",
+]
+dynamic = ["version", "description"]
+
+[project.urls]
+Documentation = "https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/blob/main/README.md"
+Issues = "https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/issues"
+Source = "https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda"
+
+[project.entry-points."distutils.command"]
+build_ext = "setuptools_cpp_cuda.build_ext:BuildExtension"
+
+[tool.setuptools_scm]
