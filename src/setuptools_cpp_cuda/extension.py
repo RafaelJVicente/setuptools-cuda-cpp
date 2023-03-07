@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import List
+from typing import List, Union
 
 import setuptools
 
@@ -12,7 +12,9 @@ cudnn_path = os.environ.get('CUDNN_HOME') or os.environ.get('CUDNN_PATH')
 CUDNN_HOME = Path(cudnn_path) if cudnn_path is not None else None
 
 
-def CppExtension(name, sources, *args, **kwargs):
+PathLike = Union[str, Path]
+
+def CppExtension(name: str, sources: List[PathLike], *args, **kwargs):
     r'''
     Creates a :class:`setuptools.Extension` for C++.
 
@@ -36,10 +38,10 @@ def CppExtension(name, sources, *args, **kwargs):
                 })
     '''
     kwargs['language'] = 'c++'
-    return setuptools.Extension(name, sources, *args, **kwargs)
+    return _prepare_extension(name, sources, *args, **kwargs)
 
 
-def CudaExtension(name, sources, *args, **kwargs):
+def CudaExtension(name: str, sources: List[PathLike], *args, **kwargs):
     r'''
     Creates a :class:`setuptools.Extension` for CUDA/C++.
 
@@ -87,23 +89,23 @@ def CudaExtension(name, sources, *args, **kwargs):
         ...        extra_compile_args={'cxx': ['-g'],
         ...                            'nvcc': ['-O2', '-rdc=true']})
     '''
-    library_dirs = list(kwargs.get('library_dirs', []))
+    library_dirs = kwargs.get('library_dirs', [])
     library_dirs += cuda_library_paths()
     kwargs['library_dirs'] = library_dirs
 
-    libraries = list(kwargs.get('libraries', []))
-    libraries.append('cudart')
+    libraries = kwargs.get('libraries', [])
+    if not any(map(lambda s: s.startswith('cudart'), libraries)):
+        libraries.append('cudart')
     kwargs['libraries'] = libraries
 
-    include_dirs = list(kwargs.get('include_dirs', []))
+    include_dirs = kwargs.get('include_dirs', [])
     include_dirs += cuda_include_paths()
     kwargs['include_dirs'] = include_dirs
 
     kwargs['language'] = 'c++'
 
     dlink_libraries = list(kwargs.get('dlink_libraries', []))
-    dlink = (kwargs.get('dlink', False)) or len(dlink_libraries) > 0
-    if dlink:
+    if (kwargs.get('dlink', False)) or len(dlink_libraries) > 0:
         extra_compile_args = dict(kwargs.get('extra_compile_args', {}))
 
         extra_compile_args_dlink = list(extra_compile_args.get('nvcc_dlink', []))
@@ -115,25 +117,36 @@ def CudaExtension(name, sources, *args, **kwargs):
 
         kwargs['extra_compile_args'] = extra_compile_args
 
+    return _prepare_extension(name, list(sources), *args, **kwargs)
+
+
+def _prepare_extension(name: str, sources: List[PathLike], *args, **kwargs):
+    name = str(name)
+    sources = list(map(str, sources))
+    kwargs['library_dirs'] = list(map(str, kwargs.get('library_dirs', [])))
+    kwargs['libraries'] = list(map(str, kwargs.get('libraries', [])))
+    kwargs['include_dirs'] = list(map(str, kwargs.get('include_dirs', [])))
+    kwargs['extra_compile_args'] = list(map(str, kwargs.get('extra_compile_args', [])))
+
     return setuptools.Extension(name, sources, *args, **kwargs)
 
 
-def cuda_include_paths() -> List[str]:
+def cuda_include_paths() -> List[Path]:
     paths = []
     cuda_home_include = CUDA_HOME / 'include'
     # if we have the Debian/Ubuntu packages for cuda, we get /usr as cuda home.
     # but gcc doesn't like having /usr/include passed explicitly
     if cuda_home_include != Path('/usr/include'):
-        paths.append(str(cuda_home_include))
+        paths.append(cuda_home_include)
     if CUDNN_HOME is not None:
-        paths.append(str(CUDNN_HOME / 'include'))
+        paths.append(CUDNN_HOME / 'include')
     return paths
 
 
-def cuda_library_paths() -> List[str]:
+def cuda_library_paths() -> List[Path]:
     paths = []
     if IS_WINDOWS:
-        lib_dir = os.path.join('lib', 'x64')
+        lib_dir = Path('lib') / 'x64'
     else:
         lib_dir = 'lib64'
         if not (CUDA_HOME / lib_dir).exists() and (CUDA_HOME / 'lib').exists():
@@ -141,9 +154,9 @@ def cuda_library_paths() -> List[str]:
             # Note that it's also possible both don't exist (see
             # _find_cuda_home) - in that case we stay with 'lib64'.
             lib_dir = 'lib'
-    paths.append(str(CUDA_HOME / lib_dir))
+    paths.append(CUDA_HOME / lib_dir)
 
     if CUDNN_HOME is not None:
-        paths.append(str(CUDNN_HOME / lib_dir))
+        paths.append(CUDNN_HOME / lib_dir)
 
     return paths

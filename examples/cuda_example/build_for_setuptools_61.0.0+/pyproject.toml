@@ -1,8 +1,8 @@
 [build-system]
-requires = ["setuptools-cpp-cuda", "flit_core >=3.2,<4"]
+requires = ["setuptools-cpp-cuda", "flit_core >=3.2,<4", "wheel", "cython"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "my-cpp-app"
+name = "my-cuda-package"
 dependencies = ["numpy"]
 dynamic = ["version", "description"]

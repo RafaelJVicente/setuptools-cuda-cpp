@@ -41,31 +41,78 @@ pip install setuptools-cpp-cuda
 
 ## Usage
 
-Add the library to your project configuration files ("pyproject.toml", "setup.py/.cfg" or "requirements.txt"):
+Add the library to your project configuration files ("pyproject.toml" and/or "setup.py/.cfg").
 
-```toml
-# [pyproject.toml]
-[build-system]
-requires = ["setuptools-cpp-cuda"]
-# ...
+### 1. Example for "legacy build" (old python versions with setuptools < 61.0.0):
+
+[**setup.py**](./examples/cuda_example/setup.py)
+
+```python
+from pathlib import Path
+from setuptools import setup
+from setuptools_cpp_cuda import CudaExtension, BuildExtension, fix_dll
+
+cuda_ext_path = Path('src/my_cuda_package/cudaest')
+cuda_ext = CudaExtension(
+    name='my_cuda_package.cudaext',
+    include_dirs=[cuda_ext_path / 'include'],
+    sources=[
+        cuda_ext_path / 'cudaext.cu',
+        cuda_ext_path / 'cudaext_wrapper.cpp',
+    ],
+    libraries=fix_dll(['cudart']),  # Use fix_dll() only for Windows compatibility (check documentation for more info).
+    extra_compile_args={
+        'cxx': ['-g'],  # cpp compiler flags
+        'nvcc': ['-O2'],  # nvcc flags
+    },
+)
+
+setup(
+    name='my-cuda-package',
+    version='0.0.1',
+    install_requires=['numpy', ],
+    extras_require={'cython': ['cython'], },
+    ext_modules=[cuda_ext],
+    cmdclass={'build_ext': BuildExtension},
+)
 ```
 
-```shell
-# [requirements.txt]
-setuptools-cpp-cuda
+You can also use pyproject.toml with [Flit](https://flit.pypa.io) making
+a [custom build-backend](https://setuptools.pypa.io/en/latest/build_meta.html#dynamic-build-dependencies-and-other-build-meta-tweaks).
+
+### 2. Example for "pyproject.toml build" (with setuptools >= 61.0.0):
+
+[**pyproject.toml**](./examples/cuda_example/build_for_setuptools_61.0.0+/pyproject.toml)
+
+```toml
+[build-system]
+requires = ["setuptools-cpp-cuda", "flit_core >=3.2,<4", "wheel", "cython"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "my-cuda-package"
+dependencies = ["numpy"]
+dynamic = ["version", "description"]
+# ...
 ```
 
 And configure the setup.py for the different extensions you want to use:
 
+[**setup.py**](examples/cuda_example/build_for_setuptools_61.0.0+/setup.py)
+
 ```python
-# [setup.py]
+from pathlib import Path
 from setuptools import setup
 from setuptools_cpp_cuda import CudaExtension, BuildExtension, fix_dll
 
+cuda_ext_path = Path('src/my_cuda_package/cudaest')
 cuda_ext = CudaExtension(
-    name='cudaext',
-    include_dirs=['include'],
-    sources=['cudaext.cu', 'cudaext_wrapper.cpp'],
+    name='my_cuda_package.cudaext',
+    include_dirs=[cuda_ext_path / 'include'],
+    sources=[
+        cuda_ext_path / 'cudaext.cu',
+        cuda_ext_path / 'cudaext_wrapper.cpp',
+    ],
     libraries=fix_dll(['cudart']),  # Use fix_dll() only for Windows compatibility (check documentation for more info).
     extra_compile_args={
         'cxx': ['-g'],  # cpp compiler flags

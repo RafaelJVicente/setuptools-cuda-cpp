@@ -20,11 +20,6 @@ cuda_ext = CudaExtension(
 )
 
 setup(
-    name='my-cuda-package',
-    version='0.0.1',
-    install_requires=['numpy', ],
-    extras_require={'cython': ['cython'], },
     ext_modules=[cuda_ext],
     cmdclass={'build_ext': BuildExtension},
-    # zip_safe=False,
 )
