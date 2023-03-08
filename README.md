@@ -2,6 +2,11 @@
 
 [![PyPI - Version](https://img.shields.io/pypi/v/setuptools-cpp-cuda.svg)](https://pypi.org/project/setuptools-cpp-cuda)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/setuptools-cpp-cuda.svg)](https://pypi.org/project/setuptools-cpp-cuda)
+[![Gitlab - Dependencies](https://img.shields.io/librariesio/release/pypi/setuptools-cpp-cuda/0.1.2?label=deps)](https://pypi.org/project/setuptools-cpp-cuda)
+[![Gitlab - Issues](https://img.shields.io/gitlab/issues/open-raw/rafaelj.vicente/setuptools-cpp-cuda?color=yellow)](https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/issues)
+[![Gitlab - Last commit](https://img.shields.io/gitlab/last-commit/rafaelj.vicente/setuptools-cpp-cuda?color=purple)](https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/issues)
+
+[//]: # ([![Gitlab - Build]&#40;https://img.shields.io/gitlab/pipeline-status/rafaelj.vicente/setuptools-cpp-cuda?branch=main&#41;]&#40;https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/issues&#41;)
 
 The setuptools-cpp-cuda is a module that extends setuptools functionality for building hybrid C++ and CUDA extensions
 for Python wrapper modules.

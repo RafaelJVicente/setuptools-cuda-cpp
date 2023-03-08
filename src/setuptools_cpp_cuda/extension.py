@@ -11,11 +11,11 @@ CUDA_HOME = find_cuda_home_path()
 cudnn_path = os.environ.get('CUDNN_HOME') or os.environ.get('CUDNN_PATH')
 CUDNN_HOME = Path(cudnn_path) if cudnn_path is not None else None
 
-
 PathLike = Union[str, Path]
 
+
 def CppExtension(name: str, sources: List[PathLike], *args, **kwargs):
-    r'''
+    r"""
     Creates a :class:`setuptools.Extension` for C++.
 
     Convenience method that creates a :class:`setuptools.Extension` with the
@@ -36,13 +36,14 @@ def CppExtension(name: str, sources: List[PathLike], *args, **kwargs):
                 cmdclass={
                     'build_ext': BuildExtension
                 })
-    '''
-    kwargs['language'] = 'c++'
+    """
+    if 'language' not in kwargs:
+        kwargs['language'] = 'c++'
     return _prepare_extension(name, sources, *args, **kwargs)
 
 
 def CudaExtension(name: str, sources: List[PathLike], *args, **kwargs):
-    r'''
+    r"""
     Creates a :class:`setuptools.Extension` for CUDA/C++.
 
     Convenience method that creates a :class:`setuptools.Extension` with the
@@ -88,17 +89,17 @@ def CudaExtension(name: str, sources: List[PathLike], *args, **kwargs):
         ...        dlink_libraries=["dlink_lib"],
         ...        extra_compile_args={'cxx': ['-g'],
         ...                            'nvcc': ['-O2', '-rdc=true']})
-    '''
-    library_dirs = kwargs.get('library_dirs', [])
+    """
+    library_dirs = list(kwargs.get('library_dirs', []))
     library_dirs += cuda_library_paths()
     kwargs['library_dirs'] = library_dirs
 
-    libraries = kwargs.get('libraries', [])
+    libraries = list(kwargs.get('libraries', []))
     if not any(map(lambda s: s.startswith('cudart'), libraries)):
         libraries.append('cudart')
     kwargs['libraries'] = libraries
 
-    include_dirs = kwargs.get('include_dirs', [])
+    include_dirs = list(kwargs.get('include_dirs', []))
     include_dirs += cuda_include_paths()
     kwargs['include_dirs'] = include_dirs
 
@@ -117,7 +118,7 @@ def CudaExtension(name: str, sources: List[PathLike], *args, **kwargs):
 
         kwargs['extra_compile_args'] = extra_compile_args
 
-    return _prepare_extension(name, list(sources), *args, **kwargs)
+    return _prepare_extension(name, sources, *args, **kwargs)
 
 
 def _prepare_extension(name: str, sources: List[PathLike], *args, **kwargs):

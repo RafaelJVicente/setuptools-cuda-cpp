@@ -7,7 +7,7 @@ name = "setuptools-cpp-cuda"
 readme = "README.md"
 requires-python = ">=3.6"
 license = { file = "LICENSE" }
-keywords = ["compilation", "compile", "cross", "cross-compilation", "cross-compile", "cuda", "setuptools", "wrapper"]
+keywords = ["compilation", "compile", "cpp", "c++", "cross", "cross-compilation", "cross-compile", "cuda", "setuptools", "wrapper"]
 authors = [{ name = "Rafael J. Vicente", email = "rafaelj.vicente@gmail.com" }]
 classifiers = [
     "License :: OSI Approved :: MIT License",
