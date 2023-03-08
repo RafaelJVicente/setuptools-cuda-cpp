@@ -1,7 +1,7 @@
 #include <Python.h>
 #include <cstdio>
 #include <string>
-#include "cudaext.cuh"
+#include "cuda_ext.cuh"
 
 static PyObject *hello_wrapper(PyObject *self, PyObject *args) {
     char *result = hello();
@@ -61,14 +61,14 @@ static PyMethodDef CudaextMethods[] = {
 // Module definition
 // The arguments of this structure tell Python what to call your extension,
 // what it's methods are and where to look for it's method definitions
-static struct PyModuleDef cudaext_definition = {
+static struct PyModuleDef cuda_ext_definition = {
         PyModuleDef_HEAD_INIT,
-        "cudaext",
+        "cuda_ext",
         "A Python module extension for C++ lib",
         -1,
         CudaextMethods
 };
 
-PyMODINIT_FUNC PyInit_cudaext(void) {
-    return PyModule_Create(&cudaext_definition);
+PyMODINIT_FUNC PyInit_cuda_ext(void) {
+    return PyModule_Create(&cuda_ext_definition);
 }

@@ -26,5 +26,4 @@ setup(
     extras_require={'cython': ['cython'], },
     ext_modules=[cpp_ext],
     cmdclass={'build_ext': BuildExtension},
-    # zip_safe=False,
 )
