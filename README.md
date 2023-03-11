@@ -21,6 +21,7 @@ for Python wrapper modules.
 - [Usage](#usage)
 - [Issues](#issues)
 - [License](#license)
+- [Acknowledgements](#acknowledgements)
 
 ## Summary
 
@@ -55,10 +56,10 @@ Add the library to your project configuration files ("pyproject.toml" and/or "se
 ```python
 from pathlib import Path
 from setuptools import setup
-from setuptools_cpp_cuda import CudaExtension, BuildExtension, fix_dll
+from setuptools_cpp_cuda import CUDAExtension, BuildExtension, fix_dll
 
 cuda_ext_path = Path('src/my_cuda_package/cuda_ext')
-cuda_ext = CudaExtension(
+cuda_ext = CUDAExtension(
     name='my_cuda_package.cuda_ext',
     include_dirs=[cuda_ext_path / 'include'],
     sources=[
@@ -108,10 +109,10 @@ And configure the setup.py for the different extensions you want to use:
 ```python
 from pathlib import Path
 from setuptools import setup
-from setuptools_cpp_cuda import CudaExtension, BuildExtension, fix_dll
+from setuptools_cpp_cuda import CUDAExtension, BuildExtension, fix_dll
 
 cuda_ext_path = Path('src/my_cuda_package/cuda_ext')
-cuda_ext = CudaExtension(
+cuda_ext = CUDAExtension(
     name='my_cuda_package.cuda_ext',
     include_dirs=[cuda_ext_path / 'include'],
     sources=[
@@ -150,3 +151,9 @@ CUDAHOME
 ## License
 
 `setuptools-cpp-cuda` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+
+## Acknowledgements
+The package is based on [cpp_extension](https://pytorch.org/docs/stable/cpp_extension.html), but it also includes:
+- Support for deprecated older architectures up to (sm / compute 3.0).
+- Improved find_cuda system.
+- Path support

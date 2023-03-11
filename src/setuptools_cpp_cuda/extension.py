@@ -14,14 +14,6 @@ CUDNN_HOME = Path(cudnn_path) if cudnn_path is not None else None
 
 def CppExtension(name: str, sources: Iterable[PathLike], *args, **kwargs):
     r"""
-    Creates a :class:`setuptools.Extension` for C++.
-
-    Convenience method that creates a :class:`setuptools.Extension` with the
-    bare minimum (but often sufficient) arguments to build a C++ extension.
-
-    All arguments are forwarded to the :class:`setuptools.Extension`
-    constructor.
-
     Example:
         >>> setup(
                 name='extension',
@@ -40,53 +32,23 @@ def CppExtension(name: str, sources: Iterable[PathLike], *args, **kwargs):
     return _prepare_extension(name, sources, *args, **kwargs)
 
 
-def CudaExtension(name: str, sources: Iterable[PathLike], *args, **kwargs):
+def CUDAExtension(name: str, sources: Iterable[PathLike], *args, **kwargs):
     r"""
-    Creates a :class:`setuptools.Extension` for CUDA/C++.
-
-    Convenience method that creates a :class:`setuptools.Extension` with the
-    bare minimum (but often sufficient) arguments to build a CUDA/C++
-    extension. This includes the CUDA include path, library path and runtime
-    library.
-
-    All arguments are forwarded to the :class:`setuptools.Extension`
-    constructor.
-
     Example:
         >>> setup(
         ...     name='cuda_extension',
         ...     ext_modules=[
-        ...         CudaExtension(
+        ...         CUDAExtension(
         ...                 name='cuda_extension',
         ...                 sources=['extension.cpp', 'extension_kernel.cu'],
+        ...                 dlink=True,
+        ...                 dlink_libraries=["dlink_lib"],
         ...                 extra_compile_args={'cxx': ['-g'],
-        ...                                     'nvcc': ['-O2']})
+        ...                                     'nvcc': ['-O2', '-rdc=true']})
         ...     ],
         ...     cmdclass={
         ...         'build_ext': BuildExtension
         ...     })
-
-    Relocatable device code linking:
-    If you want to reference device symbols across compilation units (across object files),
-    the object files need to be built with `relocatable device code` (-rdc=true or -dc).
-    An exception to this rule is "dynamic parallelism" (nested kernel launches)  which is not used a lot anymore.
-    `Relocatable device code` is less optimized so it needs to be used only on object files that need it.
-    Using `-dlto` (Device Link Time Optimization) at the device code compilation step and `dlink` step
-    help reduce the protentional perf degradation of `-rdc`.
-    Note that it needs to be used at both steps to be useful.
-    If you have `rdc` objects you need to have an extra `-dlink` (device linking) step before the CPU symbol linking step.
-    There is also a case where `-dlink` is used without `-rdc`:
-    when an extension is linked against a static lib containing rdc-compiled objects
-    like the [NVSHMEM library](https://developer.nvidia.com/nvshmem).
-    Note: Ninja is required to build a CUDA Extension with RDC linking.
-    Example:
-        >>> CudaExtension(
-        ...        name='cuda_extension',
-        ...        sources=['extension.cpp', 'extension_kernel.cu'],
-        ...        dlink=True,
-        ...        dlink_libraries=["dlink_lib"],
-        ...        extra_compile_args={'cxx': ['-g'],
-        ...                            'nvcc': ['-O2', '-rdc=true']})
     """
     library_dirs = list(kwargs.get('library_dirs', []))
     library_dirs += cuda_library_paths()

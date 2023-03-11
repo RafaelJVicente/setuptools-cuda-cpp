@@ -3,12 +3,12 @@ The setuptools-cpp-cuda is a module that extends setuptools functionality for bu
 for Python wrapper modules.
 """
 from .build_ext import BuildExtension, fix_dll
-from .extension import CppExtension, CudaExtension, CUDA_HOME, CUDNN_HOME
+from .extension import CppExtension, CUDAExtension, CUDA_HOME, CUDNN_HOME
 from .find_cuda import find_cuda_home, find_cuda_home_path
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 __all__ = [
-    'BuildExtension', 'CppExtension', 'CudaExtension',
+    'BuildExtension', 'CppExtension', 'CUDAExtension',
     'find_cuda_home', 'find_cuda_home_path',
     'fix_dll', 'nvml'
 ]
