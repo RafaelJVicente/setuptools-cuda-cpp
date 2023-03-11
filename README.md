@@ -154,6 +154,6 @@ CUDAHOME
 
 ## Acknowledgements
 The package is based on [cpp_extension](https://pytorch.org/docs/stable/cpp_extension.html), but it also includes:
-- Support for deprecated older architectures up to (sm / compute 3.0).
+- Support for deprecated older architectures (from sm / compute 3.0).
 - Improved find_cuda system.
-- Path library and windows dll support.
+- Pathlib library and Windows missing dll support.
