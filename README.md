@@ -1,4 +1,4 @@
-# Setuptools C++ CUDA
+# Setuptools CUDA C++
 
 [![PyPI - Version](https://img.shields.io/pypi/v/setuptools-cuda-cpp.svg)](https://pypi.org/project/setuptools-cuda-cpp)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/setuptools-cuda-cpp.svg)](https://pypi.org/project/setuptools-cuda-cpp)
