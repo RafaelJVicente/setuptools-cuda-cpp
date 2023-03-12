@@ -2,7 +2,7 @@ from pathlib import Path
 
 from setuptools import setup
 
-from setuptools_cpp_cuda import CppExtension, BuildExtension, fix_dll
+from setuptools_cuda_cpp import CppExtension, BuildExtension, fix_dll
 
 cpp_ext_path = Path('src/my_cpp_package/cppest')
 cpp_ext = CppExtension(

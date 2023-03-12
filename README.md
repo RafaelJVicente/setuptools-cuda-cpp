@@ -1,14 +1,14 @@
 # Setuptools C++ CUDA
 
-[![PyPI - Version](https://img.shields.io/pypi/v/setuptools-cpp-cuda.svg)](https://pypi.org/project/setuptools-cpp-cuda)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/setuptools-cpp-cuda.svg)](https://pypi.org/project/setuptools-cpp-cuda)
-[![Gitlab - Dependencies](https://img.shields.io/librariesio/release/pypi/setuptools-cpp-cuda/0.1.2?label=deps)](https://pypi.org/project/setuptools-cpp-cuda)
-[![Gitlab - Issues](https://img.shields.io/gitlab/issues/open-raw/rafaelj.vicente/setuptools-cpp-cuda?color=yellow)](https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/issues)
-[![Gitlab - Last commit](https://img.shields.io/gitlab/last-commit/rafaelj.vicente/setuptools-cpp-cuda?color=purple)](https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/issues)
+[![PyPI - Version](https://img.shields.io/pypi/v/setuptools-cuda-cpp.svg)](https://pypi.org/project/setuptools-cuda-cpp)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/setuptools-cuda-cpp.svg)](https://pypi.org/project/setuptools-cuda-cpp)
+[![GitHub - Dependencies](https://img.shields.io/librariesio/release/pypi/setuptools-cuda-cpp?label=deps)](https://pypi.org/project/setuptools-cuda-cpp)
+[![GitHub - Issues](https://img.shields.io/github/issues/RafaelJVicente/setuptools-cuda-cpp?color=yellow)](https://github.com/RafaelJVicente/setuptools-cuda-cpp/issues)
+[![GitHub - Last commit](https://img.shields.io/github/last-commit/RafaelJVicente/setuptools-cuda-cpp?color=purple)](https://github.com/RafaelJVicente/setuptools-cuda-cpp)
 
-[//]: # ([![Gitlab - Build]&#40;https://img.shields.io/gitlab/pipeline-status/rafaelj.vicente/setuptools-cpp-cuda?branch=main&#41;]&#40;https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/issues&#41;)
+[//]: # ([![GitHub - Build]&#40;https://img.shields.io/github/actions/workflow/status/RafaelJVicente/setuptools-cuda-cpp/unit-tests.yml&#41;]&#40;https://github.com/RafaelJVicente/setuptools-cuda-cpp&#41;)
 
-The setuptools-cpp-cuda is a module that extends setuptools functionality for building hybrid C++ and CUDA extensions
+The setuptools-cuda-cpp is a module that extends setuptools functionality for building hybrid C++ and CUDA extensions
 for Python wrapper modules.
 
 -----
@@ -42,7 +42,7 @@ using old python version (3.6+) or old GPU drivers (sm/compute arch 3.0+).
 ## Installation
 
 ```console
-pip install setuptools-cpp-cuda
+pip install setuptools-cuda-cpp
 ```
 
 ## Usage
@@ -56,7 +56,7 @@ Add the library to your project configuration files ("pyproject.toml" and/or "se
 ```python
 from pathlib import Path
 from setuptools import setup
-from setuptools_cpp_cuda import CUDAExtension, BuildExtension, fix_dll
+from setuptools_cuda_cpp import CUDAExtension, BuildExtension, fix_dll
 
 cuda_ext_path = Path('src/my_cuda_package/cuda_ext')
 cuda_ext = CUDAExtension(
@@ -92,7 +92,7 @@ a [custom build-backend](https://setuptools.pypa.io/en/latest/build_meta.html#dy
 
 ```toml
 [build-system]
-requires = ["setuptools-cpp-cuda", "flit_core >=3.2,<4", "wheel", "cython"]
+requires = ["setuptools-cuda-cpp", "flit_core >=3.2,<4", "wheel", "cython"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -109,7 +109,7 @@ And configure the setup.py for the different extensions you want to use:
 ```python
 from pathlib import Path
 from setuptools import setup
-from setuptools_cpp_cuda import CUDAExtension, BuildExtension, fix_dll
+from setuptools_cuda_cpp import CUDAExtension, BuildExtension, fix_dll
 
 cuda_ext_path = Path('src/my_cuda_package/cuda_ext')
 cuda_ext = CUDAExtension(
@@ -150,7 +150,7 @@ CUDAHOME
 
 ## License
 
-`setuptools-cpp-cuda` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+`setuptools-cuda-cpp` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
 
 ## Acknowledgements
 The package is based on [cpp_extension](https://pytorch.org/docs/stable/cpp_extension.html), but it also includes:

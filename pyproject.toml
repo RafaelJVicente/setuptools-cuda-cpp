@@ -3,11 +3,11 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "setuptools-cpp-cuda"
+name = "setuptools-cuda-cpp"
 readme = "README.md"
 requires-python = ">=3.6"
 license = { file = "LICENSE" }
-keywords = ["compilation", "compile", "cpp", "c++", "cross", "cuda", "ext", "extension", "setuptools", "wrapper"]
+keywords = ["cuda", "extension", "compilation", "compile", "cpp", "c++", "cross", "ext", "setuptools", "wrapper"]
 authors = [{ name = "Rafael J. Vicente", email = "rafaelj.vicente@gmail.com" }]
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -28,9 +28,9 @@ dependencies = [
 dynamic = ["version", "description"]
 
 [project.urls]
-Documentation = "https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/blob/main/README.md"
-Issues = "https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda/-/issues"
-Source = "https://gitlab.com/rafaelj.vicente/setuptools-cpp-cuda"
+Documentation = "https://github.com/RafaelJVicente/setuptools-cuda-cpp#readme"
+Issues = "https://github.com/RafaelJVicente/setuptools-cuda-cpp/issues"
+Source = "https://github.com/RafaelJVicente/setuptools-cuda-cpp"
 
 [project.entry-points."distutils.command"]
 build_ext = "setuptools_cpp_cuda.build_ext:BuildExtension"

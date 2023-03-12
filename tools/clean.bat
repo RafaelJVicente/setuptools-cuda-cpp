@@ -1,4 +1,4 @@
-pip uninstall my_cuda_package setuptools_cpp_cuda -y
+pip uninstall my_cuda_package setuptools_cuda_cpp -y
 
 rd /s /q .\build\
 rd /s /q .\dist\

@@ -2,7 +2,7 @@ from pathlib import Path
 
 from setuptools import setup
 
-from setuptools_cpp_cuda import CUDAExtension, BuildExtension, fix_dll
+from setuptools_cuda_cpp import CUDAExtension, BuildExtension, fix_dll
 
 cuda_ext_path = Path('src/my_cuda_package/cuda_ext')
 cuda_ext = CUDAExtension(
