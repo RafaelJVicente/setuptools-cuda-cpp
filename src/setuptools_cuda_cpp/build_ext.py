@@ -174,7 +174,7 @@ class BuildExtension(build_ext, object):
             convert_to_absolute_paths_inplace(self.compiler.include_dirs)
 
             _, objects, extra_postargs, pp_opts, _ = \
-                self.compiler._setup_compile(output_dir, macros,
+                self.compiler._setup_compile(str(output_dir), macros,
                                              include_dirs, sources,
                                              depends, extra_postargs)
             common_cflags = self.compiler._get_cc_args(pp_opts, debug, extra_preargs)
